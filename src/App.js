@@ -14,6 +14,7 @@ import Login from './components/login/Login';
 import Register from './components/register/Register';
 import AddCategory from "./components/category/AddCategory";
 import AddProduct from "./components/product/AddProduct";
+import AddOrder from "./components/order/AddOrder";
 
 class App extends Component {
   render() {
@@ -29,6 +30,7 @@ class App extends Component {
             <Route path="/register" component={Register}/>
             <Route path="/addcategory" component={AddCategory}/>
             <Route path="/addproduct" component={AddProduct}/>
+            <Route path="/addorder/:id/:priceNet/:priceGross" component={AddOrder}/>
           </Switch>
         </Router>
     );

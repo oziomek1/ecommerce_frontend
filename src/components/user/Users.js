@@ -27,8 +27,9 @@ class Users extends Component {
                     <div className="row justify-content-center">
                         <div className="col-10">
                             <h1 className="text-center">Users list</h1>
-                            { this.state.users.map(user =>
+                            { this.state.users.map((user, index) =>
                                 <User
+                                    key={index}
                                     userID={user.userID}
                                     userEmail={user.userEmail}
                                     userFirstname={user.userFirstname}

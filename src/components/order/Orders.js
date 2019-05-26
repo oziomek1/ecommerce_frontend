@@ -27,8 +27,9 @@ class Orders extends Component {
                     <div className="row justify-content-center">
                         <div className="col-10">
                             <h1 className="text-center">Orders list</h1>
-                            { this.state.orders.map(order =>
+                            { this.state.orders.map((order, index) =>
                                 <Order
+                                    key={index}
                                     orderID={order.orderID}
                                     userID={order.userID}
                                     orderAddress={order.orderAddress}

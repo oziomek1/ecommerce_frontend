@@ -32,10 +32,10 @@ class Order extends Component {
                             <p><strong>Order shipped</strong>: {this.renderShipped()}</p>
                         </div>
                         <div className="offset-1 col-5">
-                            {this.state.orderDetails.map(order =>
-                                <div>
-                                    <p><strong>Order net price</strong>: {order.orderDetailPriceNet}</p>
-                                    <p><strong>Order gross price</strong>: {order.orderDetailPriceGross}</p>
+                            {this.state.orderDetails.map((order, index) =>
+                                <div key={index}>
+                                    <p><strong>Order net price</strong>: {order.orderDetailPriceNet} PLN</p>
+                                    <p><strong>Order gross price</strong>: {order.orderDetailPriceGross} PLN</p>
                                     <p><strong>Product ID</strong>: {order.productID}</p>
                                     <p><strong>No. of items</strong>: {order.productQuantity}</p>
                                 </div>

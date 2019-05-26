@@ -29,8 +29,9 @@ class Products extends Component {
                         <h1 className="text-center">Products list</h1>
                         <div className="col-10">
                             <div className="card-deck">
-                                {this.state.products.map(product =>
+                                {this.state.products.map((product, index) =>
                                     <Product
+                                        key={index}
                                         productID={product.productID}
                                         productName={product.productName}
                                         productDescription={product.productDescription}
