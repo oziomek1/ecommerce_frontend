@@ -10,13 +10,26 @@ import Category from './components/category/Category';
 import Orders from './components/order/Orders';
 import Products from './components/product/Products';
 import Users from './components/user/Users';
-import Login from './components/login/Login';
-import Register from './components/register/Register';
+import SignIn from './components/signin/SignIn';
+import SignUp from './components/signup/SignUp';
 import AddCategory from "./components/category/AddCategory";
 import AddProduct from "./components/product/AddProduct";
 import AddOrder from "./components/order/AddOrder";
+import ErrorComponent from "./components/ErrorComponent";
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      firstName: '',
+    };
+    this.handleFirstName = this.handleFirstName.bind(this);
+  }
+
+  handleFirstName(value) {
+    this.setState({firstName: value})
+  }
+
   render() {
     return (
         <Router>
@@ -26,11 +39,12 @@ class App extends Component {
             <Route path="/order" component={Orders}/>
             <Route path="/product" component={Products}/>
             <Route path="/user" component={Users}/>
-            <Route path="/login" component={Login}/>
-            <Route path="/register" component={Register}/>
+            <Route path="/signin" component={SignIn}/>
+            <Route path="/signup" component={SignUp}/>
             <Route path="/addcategory" component={AddCategory}/>
             <Route path="/addproduct" component={AddProduct}/>
             <Route path="/addorder/:id/:priceNet/:priceGross" component={AddOrder}/>
+            <Route component={ErrorComponent} />
           </Switch>
         </Router>
     );

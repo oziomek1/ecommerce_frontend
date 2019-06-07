@@ -10,12 +10,24 @@ class Home extends Component {
         this.state = {
             redirectToLogin: false,
             isAuth: false,
+            email: '',
+            firstName: '',
+            lastName: '',
         };
     }
 
     async componentDidMount() {
-        const token = window.sessionStorage.getItem('token');
-        console.log('Token', token);
+        const params = new URLSearchParams(this.props.location.search);
+        this.setState({
+            email: params.get('email'),
+            firstName: params.get('firstname'),
+            lastName: params.get('lastname'),
+        });
+        console.log('Email, firstname, lastname', params.get('email'), params.get('firstname'), params.get('lastname'));
+
+        if(params.get('firstname')) {
+            return this.props.handleFirstName;
+        }
     }
 
     render() {
