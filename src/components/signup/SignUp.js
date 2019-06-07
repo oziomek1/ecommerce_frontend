@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
 
-import './Login.css';
+import './SignUp.css';
 import Header from "../header/Header";
+import {Link} from "react-router-dom";
 
-class Login extends Component {
+class SignUp extends Component {
 
     render() {
         return (
             <>
                 <Header/>
                 <div className="container">
-                    <h1>Login!!</h1>
+                    <h1>Sign Up!</h1>
+                    <p>Already a member? <Link to="/signin">Sign in</Link></p>
                 </div>
             </>
         );
     }
 }
 
-export default Login;
+export default SignUp;
