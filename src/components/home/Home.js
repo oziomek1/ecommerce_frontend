@@ -8,33 +8,14 @@ class Home extends Component {
         super(props);
 
         this.state = {
-            email: '',
-            firstName: '',
-            lastName: '',
-            socialID: '',
-            token: '',
+            email: window.sessionStorage.getItem('email'),
+            firstName: window.sessionStorage.getItem('firstName'),
+            lastName: window.sessionStorage.getItem('lastName'),
+            socialID: window.sessionStorage.getItem('socialID'),
+            token: window.sessionStorage.getItem('token'),
             redirectToLogin: false,
             isAuth: false,
         };
-    }
-
-    async componentDidMount() {
-        if (window.sessionStorage.getItem('firstname')) {
-            const socialID = window.sessionStorage.getItem('socialID');
-            const email = window.sessionStorage.getItem('email');
-            const firstName = window.sessionStorage.getItem('firstName');
-            const lastName = window.sessionStorage.getItem('lastName');
-            const token = window.sessionStorage.getItem('token');
-            this.setState({
-                email: email,
-                firstName: firstName,
-                lastName: lastName,
-                socialID: socialID,
-                token: token,
-            });
-        }
-
-        return this.props.handleFirstName;
     }
 
     render() {
@@ -42,7 +23,7 @@ class Home extends Component {
             <>
                 <Header/>
                 <div className="container">
-                    <h1>Welcome {this.state.firstName} {this.state.lastName}</h1>
+                    <h1>Welcome {window.sessionStorage.getItem('firstName')} {this.state.lastName}</h1>
                 </div>
             </>
         );

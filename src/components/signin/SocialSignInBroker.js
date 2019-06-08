@@ -9,37 +9,27 @@ class SocialSignInBroker extends Component {
         this.state = {
             redirectToHome: false,
             isAuth: false,
-            email: '',
-            firstName: '',
-            lastName: '',
-            socialID: '',
-            token: '',
+            params: '',
         };
     }
 
     async componentDidMount() {
         const params = new URLSearchParams(this.props.location.search);
-        if(params.get('firstname')) {
+        if(params.get('email')) {
             this.setState({
-                redirectToHome: true,
-                email: params.get('email'),
-                firstName: params.get('firstName'),
-                lastName: params.get('lastName'),
-                socialID: params.get('socialID'),
-                token: params.get('token'),
+                params: params,
+                redirectToHome: true
             });
-            window.sessionStorage.setItem('socialID', this.state.socialID);
-            window.sessionStorage.setItem('email', this.state.email);
-            window.sessionStorage.setItem('firstName', this.state.firstName);
-            window.sessionStorage.setItem('lastName', this.state.lastName);
-            window.sessionStorage.setItem('token', this.state.token);
-
-            return this.props.handleFirstName;
         }
     }
 
     render() {
         if (this.state.redirectToHome) {
+            window.sessionStorage.setItem('socialID', this.state.params.get('socialID'));
+            window.sessionStorage.setItem('email', this.state.params.get('email'));
+            window.sessionStorage.setItem('firstName', this.state.params.get('firstname'));
+            window.sessionStorage.setItem('lastName', this.state.params.get('lastname'));
+            window.sessionStorage.setItem('token', this.state.params.get('token'));
             return (
                 <Redirect to="/"/>
             )
