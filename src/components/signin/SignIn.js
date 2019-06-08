@@ -96,10 +96,10 @@ class SignIn extends Component {
                             <p>Or sign in via existing accounts:</p>
                             <div className="container-fluid">
                                 <div className="row vertical-align">
-                                    <a href="http://localhost:9000/authenticate/facebook" class="facebook">
+                                    <a href="http://localhost:9000/authenticate/facebook" className="facebook">
                                         <img src="images/facebook.png" width="64px" height="64px" alt="facebook login"/>
                                     </a>
-                                    <a href="http://localhost:9000/authenticate/google" class="google">
+                                    <a href="http://localhost:9000/authenticate/google" className="google">
                                         <img src="images/google.png" width="64px" height="64px" alt="google login"/>
                                     </a>
                                 </div>

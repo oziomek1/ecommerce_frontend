@@ -16,6 +16,8 @@ import AddCategory from "./components/category/AddCategory";
 import AddProduct from "./components/product/AddProduct";
 import AddOrder from "./components/order/AddOrder";
 import ErrorComponent from "./components/ErrorComponent";
+import SignOut from "./components/signout/SignOut";
+import SocialSignInBroker from "./components/signin/SocialSignInBroker";
 
 class App extends Component {
   constructor() {
@@ -41,6 +43,8 @@ class App extends Component {
             <Route path="/user" component={Users}/>
             <Route path="/signin" component={SignIn}/>
             <Route path="/signup" component={SignUp}/>
+            <Route path="/signout" component={SignOut}/>
+            <Route path="/socialsignin" component={SocialSignInBroker}/>
             <Route path="/addcategory" component={AddCategory}/>
             <Route path="/addproduct" component={AddProduct}/>
             <Route path="/addorder/:id/:priceNet/:priceGross" component={AddOrder}/>

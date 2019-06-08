@@ -54,7 +54,7 @@ class AddOrder extends Component {
     }
     handleSubmit() {
         if (this.state.productID !== '' && this.state.userID !== '') {
-            axios.post('/addorders', {
+            axios.post('/orders/add', {
                 userID: this.state.userID,
                 orderAddress: this.state.orderAddress,
                 productQuantity: this.state.productQuantity,

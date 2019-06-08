@@ -61,7 +61,7 @@ class AddProduct extends Component {
 
     handleSubmit() {
         if (this.state.productName !== '' && this.state.categoryID !== '') {
-            axios.post('/addproducts', {
+            axios.post('/products/add', {
                 productName: this.state.productName,
                 productDescription: this.state.productDescription,
                 categoryID: this.state.categoryID,

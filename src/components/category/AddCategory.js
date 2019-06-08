@@ -22,7 +22,7 @@ class AddCategory extends Component {
 
     handleSubmit() {
         if (this.state.categoryName !== '') {
-            axios.post('/addcategories', {
+            axios.post('/categories/add', {
                 categoryName: this.state.categoryName
             })
                 .then((response) => {
