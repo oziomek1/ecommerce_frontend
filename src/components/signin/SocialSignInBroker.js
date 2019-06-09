@@ -15,7 +15,7 @@ class SocialSignInBroker extends Component {
 
     async componentDidMount() {
         const params = new URLSearchParams(this.props.location.search);
-        if(params.get('email')) {
+        if(params.get('token')) {
             this.setState({
                 params: params,
                 redirectToHome: true
@@ -25,10 +25,6 @@ class SocialSignInBroker extends Component {
 
     render() {
         if (this.state.redirectToHome) {
-            window.sessionStorage.setItem('socialID', this.state.params.get('socialID'));
-            window.sessionStorage.setItem('email', this.state.params.get('email'));
-            window.sessionStorage.setItem('firstName', this.state.params.get('firstname'));
-            window.sessionStorage.setItem('lastName', this.state.params.get('lastname'));
             window.sessionStorage.setItem('token', this.state.params.get('token'));
             return (
                 <Redirect to="/"/>

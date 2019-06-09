@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 
 import './Home.css';
@@ -8,22 +9,59 @@ class Home extends Component {
         super(props);
 
         this.state = {
-            email: window.sessionStorage.getItem('email'),
-            firstName: window.sessionStorage.getItem('firstName'),
-            lastName: window.sessionStorage.getItem('lastName'),
-            socialID: window.sessionStorage.getItem('socialID'),
-            token: window.sessionStorage.getItem('token'),
             redirectToLogin: false,
             isAuth: false,
+            firstName: '',
+            lastName: '',
         };
     }
+
+    async componentDidMount() {
+        const token = window.sessionStorage.getItem('token');
+
+        if (token !== null) {
+            try {
+                const response = await axios.get(
+                    '/user',
+                    {
+                        headers: {
+                            'X-Auth-Token': token,
+                        },
+                    },
+                );
+                const data = response.data;
+
+                this.setState({
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                });
+
+                // const user: User = {
+                //     id: data.id,
+                //     userName: data['username'],
+                //     email: data.email,
+                //     createdDate: moment(data['created_date']).toDate(),
+                //     lastLogin: moment(data['last_login_date']).toDate(),
+                // };
+                //
+                // this.setState({
+                //     user,
+                //     authenticated: true,
+                // });
+            } catch (error) {
+                console.log(error);
+                this.setState({ redirectToLogin: true });
+            }
+        }
+    }
+
 
     render() {
         return (
             <>
                 <Header/>
                 <div className="container">
-                    <h1>Welcome {window.sessionStorage.getItem('firstName')} {this.state.lastName}</h1>
+                    <h1>Welcome {this.state.firstName} {this.state.lastName}</h1>
                 </div>
             </>
         );

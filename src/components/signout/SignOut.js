@@ -29,7 +29,9 @@ class SignOut extends Component {
     }
 
     render() {
-        if (this.state.shouldRedirectHome) {
+        const shouldRedirectHome = this.state.shouldRedirectHome;
+
+        if (shouldRedirectHome) {
             return <Redirect to='/'/>
         }
 

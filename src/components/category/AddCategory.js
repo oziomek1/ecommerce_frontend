@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 import './Category.css';
 import Header from "../header/Header";
@@ -10,6 +10,7 @@ class AddCategory extends Component {
         super();
         this.state = {
             categoryName: '',
+            shouldRedirectCategories: false,
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,6 +28,9 @@ class AddCategory extends Component {
             })
                 .then((response) => {
                     console.log(response.data);
+                    this.setState({
+                        shouldRedirectCategories: true,
+                    });
                 })
                 .catch((error) => {
                     console.log(error);
@@ -35,6 +39,11 @@ class AddCategory extends Component {
     }
 
     render() {
+        const shouldRedirectCategories = this.state.shouldRedirectCategories;
+
+        if (shouldRedirectCategories) {
+            return <Redirect to="/category" />
+        }
         return (
             <>
                 <Header/>

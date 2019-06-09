@@ -39,12 +39,9 @@ class SignIn extends Component {
                         shouldRedirectHome: true
                     });
                     console.log(response.data);
-                    this.props.history.push('/category');
                 })
                 .catch((error) => {
                     console.log(error);
-                    this.props.history.push('/category');
-
                 });
         }
     }
@@ -97,8 +94,8 @@ class SignIn extends Component {
                             <div className="container-fluid">
                                 <div className="row vertical-align">
                                     <a href="http://localhost:9000/authenticate/facebook" className="facebook">
-                                        <img src="images/facebook.png" width="64px" height="64px" alt="facebook login"/>
-                                    </a>
+                                    <img src="images/facebook.png" width="64px" height="64px" alt="facebook login"/>
+                                </a>
                                     <a href="http://localhost:9000/authenticate/google" className="google">
                                         <img src="images/google.png" width="64px" height="64px" alt="google login"/>
                                     </a>

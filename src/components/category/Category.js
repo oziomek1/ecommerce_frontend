@@ -14,8 +14,16 @@ class Category extends Component {
     }
 
     async componentDidMount() {
-        const promise = await axios.get('/categories');
+        console.log('token in category', window.sessionStorage.getItem('token'));
+        const promise = await axios.get('/categories',
+            {
+                headers: {
+                    'X-Auth-Token': window.sessionStorage.getItem('token'),
+                },
+            },
+        );
         const response = promise.data;
+        console.log("categories response", response);
         this.setState({categories : response});
     }
 
