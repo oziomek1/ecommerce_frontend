@@ -12,7 +12,7 @@ class Products extends Component {
         this.state = {
             products: [],
             categories: [],
-            displayCategory: 'all',
+            displayCategoryID: '0',
         };
         this.setCategory = this.setCategory.bind(this);
     }
@@ -24,11 +24,13 @@ class Products extends Component {
         console.log(response);
         const categoriesPromise = await axios.get('/categories');
         const categoriesResponse = categoriesPromise.data;
-        this.setState({categories: categoriesResponse});
+        this.setState({
+            categories: [...categoriesResponse, {'categoryID': 0, 'categoryName': 'All'}].reverse()
+        });
     }
 
     setCategory(category) {
-        this.setState({displayCategory: category});
+        this.setState({displayCategoryID: category.categoryID});
         console.log('set category to ', category);
     }
 
@@ -45,6 +47,7 @@ class Products extends Component {
                         <div className="col-10">
                             <div className="card-deck">
                                 {this.state.products
+                                    .filter((item) => item.categoryID === this.state.displayCategoryID || this.state.displayCategoryID === 0)
                                     .map((product, index) =>
                                     <Product
                                         key={index}
