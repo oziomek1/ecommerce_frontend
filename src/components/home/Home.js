@@ -35,19 +35,6 @@ class Home extends Component {
                     firstName: data.firstName,
                     lastName: data.lastName,
                 });
-
-                // const user: User = {
-                //     id: data.id,
-                //     userName: data['username'],
-                //     email: data.email,
-                //     createdDate: moment(data['created_date']).toDate(),
-                //     lastLogin: moment(data['last_login_date']).toDate(),
-                // };
-                //
-                // this.setState({
-                //     user,
-                //     authenticated: true,
-                // });
             } catch (error) {
                 console.log(error);
                 this.setState({ redirectToLogin: true });
@@ -61,7 +48,13 @@ class Home extends Component {
             <>
                 <Header/>
                 <div className="container">
-                    <h1>Welcome {this.state.firstName} {this.state.lastName}</h1>
+                    <div className="row justify-content-center">
+                        <h1>Welcome {this.state.firstName} {this.state.lastName}</h1>
+                    </div>
+                        <hr />
+                    <div className="row justify-content-center">
+                        <img className="d-block w-75" src="images/spain.jpg" alt="First slide"/>
+                    </div>
                 </div>
             </>
         );

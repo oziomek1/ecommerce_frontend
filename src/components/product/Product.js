@@ -8,25 +8,33 @@ class Product extends Component {
         return (
             <div className="product col-lg-4 col-md-6">
                 <div className="card m-1">
+                    <img className="card-img-top" src={"images/" + this.props.productImageURL} alt={this.props.productName}/>
                     <div className="card-body">
-                        <h3 className="card-title">
-                            <p>Item: {this.props.productName}</p>
+                        <h3 className="card-title row justify-content-center">
+                            <p>{this.props.productName}</p>
                         </h3>
                         <div className="col-12">
-                            <p>Net price: {this.props.productPriceNet} PLN</p>
-                            <p>Gross price: {this.props.productPriceGross} PLN</p>
-                            <div className="card-text m-1">
+                            <div className="mb-4 card-text row justify-content-center">
                                 <br/>
-                                <p className="offset-1">{this.props.productDescription}</p>
-                                <br/>
+                                <div>{this.props.productDescription}</div>
                             </div>
-                            <Link to={'/addorder'
-                                + '/' + this.props.productID
-                                + '/' + this.props.productPriceNet
-                                + '/' + this.props.productPriceGross
-                            }>
-                                <p className="btn btn-success"> To cart!</p>
-                            </Link>
+                            <div className="row justify-content-center">
+                                <Link to={'/addorder'
+                                    + '/' + this.props.productID
+                                    + '/' + this.props.productPriceNet
+                                    + '/' + this.props.productPriceGross
+                                }>
+                                    <p className="btn btn-success"> Buy</p>
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="card-footer text-muted">
+                        <div className="row justify-content-center">
+                            <div className="price-net">{this.props.productPriceNet} PLN Net</div>
+                        </div>
+                        <div className="row justify-content-center">
+                            <div className="price-gross">{this.props.productPriceGross} PLN Gross</div>
                         </div>
                     </div>
                 </div>

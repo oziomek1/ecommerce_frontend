@@ -7,8 +7,8 @@ class Header extends Component {
 
     render() {
         return (
-            <div className="container">
-                <div className="navbar navbar-expand navbar-dark bg-dark">
+            <div className="navbar navbar-expand navbar-dark bg-dark">
+                <div className="container">
                     <div className="navbar-collapse collapse">
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item">

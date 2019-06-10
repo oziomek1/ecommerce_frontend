@@ -1,3 +1,14 @@
 .card-text {
-    background-color: ghostwhite;
+    font-size: 14px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: auto;
+}
+
+.price-net {
+    font-size: 14px;
+}
+
+.price-gross {
+    font-size: 20px;
 }

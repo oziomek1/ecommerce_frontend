@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 
 import './SignIn.css';
 import Header from "../header/Header";
@@ -7,17 +7,19 @@ import {Link, Redirect} from "react-router-dom";
 
 class SignIn extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             email: '',
             password: '',
+            rememberMe: false,
             shouldRedirectHome: false,
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChangeEmail = this.handleChangeEmail.bind(this);
         this.handleChangePassword = this.handleChangePassword.bind(this);
+        this.handleChangeRememberMe = this.handleChangeRememberMe.bind(this);
     }
 
     handleChangeEmail(event) {
@@ -28,17 +30,25 @@ class SignIn extends Component {
         this.setState({password: event.target.value});
     }
 
-    handleSubmit() {
+    handleChangeRememberMe(event) {
+        this.setState({rememberMe: event.target.value});
+    }
+
+    handleSubmit = async (e: FormEvent) => {
+        e.preventDefault();
         if (this.state.email !== '' && this.state.password) {
-            axios.post('/signIn', {
+            await axios.post('/signIn', {
                 email: this.state.email,
-                password: this.state.password
+                password: this.state.password,
+                rememberMe: this.state.rememberMe,
             })
                 .then((response) => {
+                    const data = response.data;
+                    window.sessionStorage.setItem('token', data['token']);
+
                     this.setState({
                         shouldRedirectHome: true
                     });
-                    console.log(response.data);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -60,8 +70,8 @@ class SignIn extends Component {
                             <h1 className="text-center">Sign In</h1>
                             <form onSubmit={this.handleSubmit}>
                                 <div className="form-group row">
-                                    <label className="col-sm-2 col-form-label">Email:</label>
-                                    <div className="col-sm-10">
+                                    <label className="col-sm-3 col-form-label">Email:</label>
+                                    <div className="col-sm-9">
                                         <input
                                             id="email"
                                             className="form-control"
@@ -72,20 +82,30 @@ class SignIn extends Component {
                                     </div>
                                 </div>
                                 <div className="form-group row">
-                                    <label className="col-sm-2 col-form-label">Password:</label>
-                                    <div className="col-sm-10">
+                                    <label className="col-sm-3 col-form-label">Password:</label>
+                                    <div className="col-sm-9">
                                         <input
                                             id="password"
                                             type="password"
                                             className="form-control"
-                                            placeholder="password"
+                                            placeholder="Password"
                                             value={this.state.password}
                                             onChange={this.handleChangePassword}
                                         />
                                     </div>
                                 </div>
+                                <div className="form-check">
+                                    <input
+                                        id="rememberMe"
+                                        type="checkbox"
+                                        className="form-check-input"
+                                        value={this.state.rememberMe}
+                                        onChange={this.handlerChangerememberMe}
+                                    />
+                                    <label className="form-check-label" htmlFor="rememberMe">Remember me</label>
+                                </div>
                                 <button type="submit" className="btn btn-success">
-                                    Log in
+                                    Sign in
                                 </button>
                             </form>
                             <hr />

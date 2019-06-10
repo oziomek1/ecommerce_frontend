@@ -9,39 +9,48 @@ class Users extends Component {
     constructor() {
         super();
         this.state = {
-            users: []
+            user: []
         };
     }
 
     async componentDidMount() {
-        const promise = await axios.get('/users');
+        const token = window.sessionStorage.getItem('token');
+
+        const promise = await axios.get('/user',
+            {
+                headers: {
+                    'X-Auth-Token': token,
+                },
+            },
+        );
         const response = promise.data;
-        this.setState({users : response});
+        console.log(response);
+        this.setState({user : response});
     }
 
     render() {
-        return (
-            <>
-                <Header/>
-                <div className="container">
-                    <div className="row justify-content-center">
-                        <div className="col-10">
-                            <h1 className="text-center">Users list</h1>
-                            { this.state.users.map((user, index) =>
+        if (this.state.user) {
+            return (
+                <>
+                    <Header/>
+                    <div className="container">
+                        <div className="row justify-content-center">
+                            <div className="col-10">
+                                <h1 className="text-center">User info</h1>
                                 <User
-                                    key={index}
-                                    userID={user.userID}
-                                    userEmail={user.userEmail}
-                                    userFirstname={user.userFirstname}
-                                    userLastname={user.userLastname}
-                                    userAddress={user.userAddress}
+                                    userID={this.state.user.userID}
+                                    userEmail={this.state.user.email}
+                                    userFirstname={this.state.user.firstName}
+                                    userLastname={this.state.user.lastName}
+                                    userAddress={this.state.user.address}
                                 />
-                            )}
+                            </div>
                         </div>
                     </div>
-                </div>
-            </>
-        );
+                </>
+            );
+        }
+        return null;
     }
 }
 

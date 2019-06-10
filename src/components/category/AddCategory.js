@@ -1,13 +1,13 @@
 import axios from 'axios';
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import { Link, Redirect } from "react-router-dom";
 
 import './Category.css';
 import Header from "../header/Header";
 
 class AddCategory extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             categoryName: '',
             shouldRedirectCategories: false,
@@ -21,9 +21,10 @@ class AddCategory extends Component {
         this.setState({categoryName: event.target.value});
     }
 
-    handleSubmit() {
+    handleSubmit = async (e: FormEvent) => {
+        e.preventDefault();
         if (this.state.categoryName !== '') {
-            axios.post('/categories/add', {
+            await axios.post('/categories/add', {
                 categoryName: this.state.categoryName
             })
                 .then((response) => {

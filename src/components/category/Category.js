@@ -14,7 +14,6 @@ class Category extends Component {
     }
 
     async componentDidMount() {
-        console.log('token in category', window.sessionStorage.getItem('token'));
         const promise = await axios.get('/categories',
             {
                 headers: {
