@@ -7,12 +7,12 @@ import Header from "../header/Header";
 import {Link} from "react-router-dom";
 
 class Products extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             products: [],
             categories: [],
-            displayCategoryID: '0',
+            displayCategoryID: 0,
         };
         this.setCategory = this.setCategory.bind(this);
     }
@@ -35,6 +35,7 @@ class Products extends Component {
     }
 
     render() {
+        const isAdmin = window.sessionStorage.getItem('isAdmin') === 'true';
         return (
             <>
                 <Header/>
@@ -60,10 +61,12 @@ class Products extends Component {
                                     />
                                 )}
                             </div>
-                            <hr />
-                            <Link to="/addproduct">
-                                <p className="btn btn-info">Add new product!</p>
-                            </Link>
+                            <hr/>
+                            {isAdmin &&
+                                <Link to="/addproduct">
+                                    <p className="btn btn-info">Add new product!</p>
+                                </Link>
+                            }
                         </div>
                     </div>
                 </div>

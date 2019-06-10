@@ -6,8 +6,8 @@ import Header from "../header/Header";
 import {Link} from "react-router-dom";
 
 class Category extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             categories: []
         };

@@ -3,16 +3,17 @@ import React, { Component } from 'react';
 
 import './Home.css';
 import Header from "../header/Header";
+import {Redirect} from "react-router-dom";
 
 class Home extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            redirectToLogin: false,
             isAuth: false,
             firstName: '',
             lastName: '',
+            shouldRedirectSignIn: false,
         };
     }
 
@@ -21,8 +22,7 @@ class Home extends Component {
 
         if (token !== null) {
             try {
-                const response = await axios.get(
-                    '/user',
+                const response = await axios.get('/user',
                     {
                         headers: {
                             'X-Auth-Token': token,
@@ -35,15 +35,22 @@ class Home extends Component {
                     firstName: data.firstName,
                     lastName: data.lastName,
                 });
+                window.sessionStorage.setItem('isAdmin', data.isAdmin);
+                window.sessionStorage.setItem('userID', data.userID);
+                console.log('userData', data);
             } catch (error) {
                 console.log(error);
-                this.setState({ redirectToLogin: true });
+                this.setState({ shouldRedirectSignIn: true });
             }
         }
     }
 
 
     render() {
+        if (this.state.shouldRedirectSignIn) {
+            return <Redirect to="/signin" />;
+        }
+
         return (
             <>
                 <Header/>

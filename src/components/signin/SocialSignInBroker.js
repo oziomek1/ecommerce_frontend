@@ -15,7 +15,7 @@ class SocialSignInBroker extends Component {
 
     async componentDidMount() {
         const params = new URLSearchParams(this.props.location.search);
-        if(params.get('token')) {
+        if (params.get('token')) {
             this.setState({
                 params: params,
                 redirectToHome: true

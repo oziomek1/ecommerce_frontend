@@ -1,25 +1,33 @@
 import axios from 'axios';
-import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import React, { Component, FormEvent } from 'react';
+import { Redirect } from "react-router-dom";
 
 import './Orders.css';
 import Header from "../header/Header";
 
 class AddOrder extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
+            readParams: false,
+            params: '',
             orderID: '',
-            orders: [],
-            userID: 4,
+            firstName: '',
+            lastName: '',
+            userID: '',
             orderAddress: '',
             orderShipped: false,
+            productImageURL: '',
+            productDescription: '',
+            productName: '',
             productID: '',
             productQuantity: 1,
             productPriceNet: '',
             productPriceGross: '',
             orderDetailsPriceNet: '',
             orderDetailsPriceGross: '',
+            shouldRedirectSignIn: false,
+            shouldRedirectProducts: false,
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,15 +36,61 @@ class AddOrder extends Component {
     }
 
     async componentDidMount() {
-        let productPriceNet = parseInt(this.props.match.params.priceNet, 10);
-        let productPriceGross = parseInt(this.props.match.params.priceGross, 10);
-        this.setState({
-            productID: parseInt(this.props.match.params.id, 10),
-            productPriceNet: productPriceNet,
-            productPriceGross: productPriceGross,
-            orderDetailsPriceNet: productPriceNet,
-            orderDetailsPriceGross: productPriceGross,
-        });
+        const params = await new URLSearchParams(this.props.location.search);
+        if (params.get('productID')) {
+            this.setState({
+                params: params,
+                readParams: true,
+            });
+        }
+        const token = window.sessionStorage.getItem('token');
+        if (token !== null) {
+            try {
+                const response = await axios.get(
+                    '/user',
+                    {
+                        headers: {
+                            'X-Auth-Token': token,
+                        },
+                    },
+                );
+                const data = response.data;
+
+                if (this.state.readParams) {
+                    const productResponse = await axios.get(
+                        '/products/' + this.state.params.get('productID'),
+                        {
+                            headers: {
+                                'X-Auth-Token': token,
+                            },
+                        },
+                    );
+                    const productData = productResponse.data[0];
+                    console.log('productresponse', productResponse.data[0]);
+
+                    this.setState({
+                        firstName: data.firstName,
+                        lastName: data.lastName,
+                        userID: data.userID,
+                        orderAddress: data.address,
+                        productName: productData.productName,
+                        productImageURL: productData.productImageURL,
+                        productDescription: productData.productDescription,
+                        productID: parseInt(this.state.params.get('productID')),
+                        productPriceNet: parseInt(this.state.params.get('priceNet'), 10),
+                        productPriceGross: parseInt(this.state.params.get('priceGross'), 10),
+                        orderDetailsPriceNet: parseInt(this.state.params.get('priceNet'), 10),
+                        orderDetailsPriceGross: parseInt(this.state.params.get('priceGross'), 10),
+                    });
+                    console.log('state', this.state);
+                }
+            } catch (error) {
+                console.log(error);
+                this.setState({ shouldRedirectSignIn: true });
+            }
+        } else {
+            this.setState({ shouldRedirectSignIn: true });
+        }
     }
 
     handleChangeOrderAddress(event) {
@@ -52,9 +106,10 @@ class AddOrder extends Component {
             orderDetailsPriceGross: orderDetailsPriceGross,
         });
     }
-    handleSubmit() {
+    handleSubmit = async (e: FormEvent) => {
+        e.preventDefault();
         if (this.state.productID !== '' && this.state.userID !== '') {
-            axios.post('/orders/add', {
+            await axios.post('/orders/add', {
                 userID: this.state.userID,
                 orderAddress: this.state.orderAddress,
                 productQuantity: this.state.productQuantity,
@@ -64,6 +119,9 @@ class AddOrder extends Component {
             })
                 .then((response) => {
                     console.log(response.data);
+                    this.setState({
+                        shouldRedirectProducts: true,
+                    })
                 })
                 .catch((error) => {
                     console.log(error);
@@ -72,70 +130,71 @@ class AddOrder extends Component {
     }
 
     render() {
+        if (this.state.shouldRedirectSignIn) {
+            return <Redirect to='/signin' />;
+        }
+        if (this.state.shouldRedirectProducts) {
+            return <Redirect to='/product' />;
+        }
+
         return (
             <>
                 <Header/>
                 <div className="container">
-                    <div className="row justify-content-center">
-                        <div className="col-lg-6">
-                            <h1 className="text-center">Add Order</h1>
-                            <form onSubmit={this.handleSubmit}>
-                                <br/>
-                                <div className="row">
-                                    <div className="col-6">
-                                    <p id="userID">UserID: {this.state.userID}</p>
+                    <div className="m-4">
+                        <div className="card text-center">
+                            <h2 className="card-header">
+                                Prepare order, {this.state.firstName}
+                            </h2>
+                            <div className="card-body">
+                                <h3 className="card-title">Product: <b>{this.state.productName}</b></h3>
+                                <img className="card-img-top" src={"images/" + this.props.productImageURL} alt="Trip illustration"/>
+                                <p className="card-title">Description: {this.state.productDescription}</p>
+                                <form onSubmit={this.handleSubmit}>
+                                    <div className="form-group">
+                                        <label className="col-form-label">Address:</label>
+                                        <div className="offset-3 col-sm-6">
+                                            <input
+                                                id="orderAddress"
+                                                type="text"
+                                                className="form-control"
+                                                placeholder="Address"
+                                                value={this.state.orderAddress}
+                                                onChange={this.handleChangeOrderAddress}
+                                            />
+                                        </div>
                                     </div>
-                                    <div className="col-6">
-                                        <p id="userID">ProductID: {this.state.productID}</p>
+                                    <br/>
+                                    <p id="productPriceNet">Net price per person: {this.state.productPriceNet}</p>
+                                    <br/>
+                                    <p id="productPriceGross">Gross price per person: {this.state.productPriceGross}</p>
+                                    <br/>
+                                    <div className="form-group">
+                                        <label className="col-form-label">Person number:</label>
+                                        <div className="offset-4 col-sm-4">
+                                            <input
+                                                id="orderProductQuantity"
+                                                type="number"
+                                                min="1"
+                                                max="100"
+                                                className="form-control"
+                                                placeholder="Quantity"
+                                                value={this.state.productQuantity}
+                                                onChange={this.handleChangeProductQuantity}
+                                            />
+                                        </div>
                                     </div>
-                                </div>
-                                <br/>
-                                <div className="form-group row">
-                                    <label className="col-sm-2 col-form-label">Address:</label>
-                                    <div className="col-sm-10">
-                                        <input
-                                            id="orderAddress"
-                                            type="text"
-                                            className="form-control"
-                                            placeholder="Address"
-                                            value={this.state.orderAddress}
-                                            onChange={this.handleChangeOrderAddress}
-                                        />
-                                    </div>
-                                </div>
-                                <br/>
-                                <p id="productPriceNet">Net price per item: {this.state.productPriceNet}</p>
-                                <br/>
-                                <p id="productPriceGross">Gross price per item: {this.state.productPriceGross}</p>
-                                <br/>
-                                <div className="form-group row">
-                                    <label className="col-sm-2 col-form-label">Product Quantity:</label>
-                                    <div className="col-sm-10">
-                                        <input
-                                            id="orderProductQuantity"
-                                            type="number"
-                                            min="1"
-                                            max="100"
-                                            className="form-control"
-                                            placeholder="Quantity"
-                                            value={this.state.productQuantity}
-                                            onChange={this.handleChangeProductQuantity}
-                                        />
-                                    </div>
-                                </div>
-                                <br/>
-                                <p id="orderTotalPriceNet">Total net price: {this.state.orderDetailsPriceNet}</p>
-                                <br/>
-                                <p id="orderTotalPriceGross">Total gross price: {this.state.orderDetailsPriceGross}</p>
-                                <br/>
-                                <button type="submit" className="btn btn-success">
-                                    Add
-                                </button>
-                            </form>
-                            <hr />
-                            <Link to="/order">
-                                <p className="btn btn-info">Go to orders!</p>
-                            </Link>
+                                    <br/>
+                                    <p id="orderTotalPriceNet">Total net price: {this.state.orderDetailsPriceNet}</p>
+                                    <br/>
+                                    <p id="orderTotalPriceGross">Total gross
+                                        price: {this.state.orderDetailsPriceGross}</p>
+                                    <br/>
+                                    <button type="submit" className="btn btn-success">
+                                        Order
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

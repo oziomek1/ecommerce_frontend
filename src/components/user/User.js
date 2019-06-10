@@ -9,16 +9,18 @@ class User extends Component {
             <div className="user">
                 <div className="jumbotron jumbotron-fluid">
                     <div className="row justify-content-center">
-                        <h4><strong>User ID: {this.props.userID}</strong></h4>
+                        <h2><strong>Details:</strong></h2>
                     </div>
                     <div className="row">
                         <div className="offset-1 col-5">
-                            <p><strong>User name</strong>: {this.props.userFirstname}</p>
-                            <p><strong>User surname</strong>: {this.props.userLastname}</p>
+                            <p><strong>First Name</strong>: {this.props.userFirstname}</p>
+                            <p><strong>Last Name</strong>: {this.props.userLastname}</p>
+                            <p><strong>ID</strong>: {this.props.userID}</p>
                         </div>
                         <div className="offset-1 col-5">
-                            <p><strong>User address</strong>: {this.props.userAddress}</p>
-                            <p><strong>User email</strong>: {this.props.userEmail}</p>
+                            <p><strong>Address</strong>: {this.props.userAddress}</p>
+                            <p><strong>Email</strong>: {this.props.userEmail}</p>
+                            <p><strong>Social ID</strong>: {this.props.userSocialID}</p>
                         </div>
                     </div>
                 </div>

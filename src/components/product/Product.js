@@ -8,22 +8,25 @@ class Product extends Component {
         return (
             <div className="product col-lg-4 col-md-6">
                 <div className="card m-1">
-                    <img className="card-img-top" src={"images/" + this.props.productImageURL} alt={this.props.productName}/>
+                    <Link to={'/addorder?productID=' + this.props.productID +
+                        '&priceNet=' + this.props.productPriceNet + '&priceGross=' + this.props.productPriceGross}>
+                        <img className="card-img-top" src={"images/" + this.props.productImageURL} alt={this.props.productName}/>
+                    </Link>
                     <div className="card-body">
-                        <h3 className="card-title row justify-content-center">
-                            <p>{this.props.productName}</p>
-                        </h3>
+                        <Link to={'/addorder?productID=' + this.props.productID +
+                            '&priceNet=' + this.props.productPriceNet + '&priceGross=' + this.props.productPriceGross}>
+                            <h3 className="card-title row justify-content-center">
+                                <p>{this.props.productName}</p>
+                            </h3>
+                        </Link>
                         <div className="col-12">
                             <div className="mb-4 card-text row justify-content-center">
                                 <br/>
                                 <div>{this.props.productDescription}</div>
                             </div>
                             <div className="row justify-content-center">
-                                <Link to={'/addorder'
-                                    + '/' + this.props.productID
-                                    + '/' + this.props.productPriceNet
-                                    + '/' + this.props.productPriceGross
-                                }>
+                                <Link to={'/addorder?productID=' + this.props.productID +
+                                    '&priceNet=' + this.props.productPriceNet + '&priceGross=' + this.props.productPriceGross}>
                                     <p className="btn btn-success"> Buy</p>
                                 </Link>
                             </div>

@@ -18,10 +18,11 @@ import AddOrder from "./components/order/AddOrder";
 import ErrorComponent from "./components/ErrorComponent";
 import SignOut from "./components/signout/SignOut";
 import SocialSignInBroker from "./components/signin/SocialSignInBroker";
+import Settings from "./components/setting/Settings";
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       firstName: '',
     };
@@ -47,7 +48,8 @@ class App extends Component {
             <Route path="/socialsignin" component={SocialSignInBroker}/>
             <Route path="/addcategory" component={AddCategory}/>
             <Route path="/addproduct" component={AddProduct}/>
-            <Route path="/addorder/:id/:priceNet/:priceGross" component={AddOrder}/>
+            <Route path="/addorder" component={AddOrder}/>
+            <Route path="/setting" component={Settings}/>
             <Route component={ErrorComponent} />
           </Switch>
         </Router>
