@@ -4,6 +4,20 @@ import {NavLink} from "react-router-dom";
 import './Header.css';
 
 class Header extends Component {
+    constructor(props) {
+        super(props);
+        this.setState({
+            isAuth: false,
+            isAdmin: false,
+        })
+    }
+    componentDidMount() {
+        this.setState({
+            isAuth: window.sessionStorage.getItem('token') !== null,
+            isAdmin: window.sessionStorage.getItem('isAdmin') === 'true',
+        })
+    }
+
     render() {
         return (
             <div className="navbar navbar-expand navbar-dark bg-dark">

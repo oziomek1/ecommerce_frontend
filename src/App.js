@@ -19,6 +19,10 @@ import ErrorComponent from "./components/ErrorComponent";
 import SignOut from "./components/signout/SignOut";
 import SocialSignInBroker from "./components/signin/SocialSignInBroker";
 import Settings from "./components/setting/Settings";
+import EditCategory from "./components/category/EditCategory";
+import DeleteCategory from "./components/category/DeleteCategory";
+import EditProduct from "./components/product/EditProduct";
+import DeleteProduct from "./components/product/DeleteProduct";
 
 class App extends Component {
   constructor(props) {
@@ -47,7 +51,11 @@ class App extends Component {
             <Route path="/signout" component={SignOut}/>
             <Route path="/socialsignin" component={SocialSignInBroker}/>
             <Route path="/addcategory" component={AddCategory}/>
+            <Route path="/editcategory" component={EditCategory}/>
+            <Route path="/deletecategory" component={DeleteCategory}/>
             <Route path="/addproduct" component={AddProduct}/>
+            <Route path="/editproduct" component={EditProduct}/>
+            <Route path="/deleteproduct" component={DeleteProduct}/>
             <Route path="/addorder" component={AddOrder}/>
             <Route path="/setting" component={Settings}/>
             <Route component={ErrorComponent} />

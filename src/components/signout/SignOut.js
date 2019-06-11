@@ -10,18 +10,25 @@ class SignOut extends Component {
         super(props);
 
         this.state = {
-            shouldRedirectHome: false,
+            shouldRedirectSignIn: false,
         };
     }
 
     async componentDidMount() {
+        const token = window.sessionStorage.getItem('token');
         try {
-            await axios.get('/signOut');
+            await axios.get('/signOut',
+                {
+                    headers: {
+                        'X-Auth-Token': token,
+                    },
+                },
+            );
 
             sessionStorage.clear();
 
             this.setState({
-                shouldRedirectHome: true,
+                shouldRedirectSignIn: true,
             });
         } catch (error) {
             console.log(error);
@@ -29,10 +36,10 @@ class SignOut extends Component {
     }
 
     render() {
-        const shouldRedirectHome = this.state.shouldRedirectHome;
+        const shouldRedirectSignIn = this.state.shouldRedirectSignIn;
 
-        if (shouldRedirectHome) {
-            return <Redirect to='/'/>
+        if (shouldRedirectSignIn) {
+            return <Redirect to='/signin'/>
         }
 
         return (

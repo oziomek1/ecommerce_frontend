@@ -5,9 +5,23 @@ import './Products.css';
 class Product extends Component {
 
     render() {
+        const isAdmin = window.sessionStorage.getItem('isAdmin') === 'true';
         return (
             <div className="product col-lg-4 col-md-6">
                 <div className="card m-1">
+                    {isAdmin &&
+                        <div className="card-header">
+                            <div className="text-center">
+                                <Link to={"/editproduct/?id=" + this.props.productID}>
+                                    <div className="btn btn-success edit">Edit</div>
+                                </Link>
+                                <span className="m-1"/>
+                                <Link to={"/deleteproduct/?id=" + this.props.productID}>
+                                    <div className="btn btn-danger delete">Delete</div>
+                                </Link>
+                            </div>
+                        </div>
+                    }
                     <Link to={'/addorder?productID=' + this.props.productID +
                         '&priceNet=' + this.props.productPriceNet + '&priceGross=' + this.props.productPriceGross}>
                         <img className="card-img-top" src={"images/" + this.props.productImageURL} alt={this.props.productName}/>

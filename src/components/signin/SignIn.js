@@ -14,6 +14,7 @@ class SignIn extends Component {
             password: '',
             rememberMe: false,
             shouldRedirectHome: false,
+            passedWrongCredentials: false,
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -52,11 +53,16 @@ class SignIn extends Component {
                 })
                 .catch((error) => {
                     console.log(error);
+                    this.setState({
+                        passedWrongCredentials: true,
+                    })
                 });
         }
     }
 
     render() {
+        const passedWrongCredentials = this.state.passedWrongCredentials;
+
         if (this.state.shouldRedirectHome) {
             return <Redirect to="/" />;
         }
@@ -68,6 +74,11 @@ class SignIn extends Component {
                     <div className="row justify-content-center">
                         <div className="col-lg-6">
                             <h1 className="text-center">Sign In</h1>
+                            {passedWrongCredentials &&
+                                <div className="alert alert-warning" role="alert">
+                                    Wrong sign in credentials. Please try again
+                                </div>
+                            }
                             <form onSubmit={this.handleSubmit}>
                                 <div className="form-group row">
                                     <label className="col-sm-3 col-form-label">Email:</label>

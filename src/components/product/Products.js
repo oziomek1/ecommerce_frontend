@@ -64,7 +64,7 @@ class Products extends Component {
                             <hr/>
                             {isAdmin &&
                                 <Link to="/addproduct">
-                                    <p className="btn btn-info">Add new product!</p>
+                                    <p className="btn btn-primary">Add new product!</p>
                                 </Link>
                             }
                         </div>
