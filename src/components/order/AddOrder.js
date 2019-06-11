@@ -66,7 +66,6 @@ class AddOrder extends Component {
                         },
                     );
                     const productData = productResponse.data[0];
-                    console.log('productresponse', productResponse.data[0]);
 
                     this.setState({
                         firstName: data.firstName,
@@ -82,7 +81,6 @@ class AddOrder extends Component {
                         orderDetailsPriceNet: parseInt(this.state.params.get('priceNet'), 10),
                         orderDetailsPriceGross: parseInt(this.state.params.get('priceGross'), 10),
                     });
-                    console.log('state', this.state);
                 }
             } catch (error) {
                 console.log(error);
@@ -118,7 +116,6 @@ class AddOrder extends Component {
                 orderDetailsPriceGross: this.state.orderDetailsPriceGross
             })
                 .then((response) => {
-                    console.log(response.data);
                     this.setState({
                         shouldRedirectProducts: true,
                     })

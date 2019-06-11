@@ -84,7 +84,6 @@ class AddProduct extends Component {
                 productPriceGross: this.state.productPriceGross
             })
                 .then((response) => {
-                    console.log(response.data);
                     this.setState({
                         shouldRedirectProducts: true,
                     });

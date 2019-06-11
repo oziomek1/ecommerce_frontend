@@ -37,7 +37,6 @@ class Home extends Component {
                 });
                 window.sessionStorage.setItem('isAdmin', data.isAdmin);
                 window.sessionStorage.setItem('userID', data.userID);
-                console.log('userData', data);
             } catch (error) {
                 console.log(error);
                 this.setState({ shouldRedirectSignIn: true });

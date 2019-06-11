@@ -22,7 +22,6 @@ class Category extends Component {
             },
         );
         const response = promise.data;
-        console.log("categories response", response);
         this.setState({categories : response});
     }
 

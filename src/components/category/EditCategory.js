@@ -36,7 +36,6 @@ class EditCategory extends Component {
                 },
             );
             const response = promise.data[0];
-            console.log("category response", response);
             this.setState({
                 categoryID : response.categoryID,
                 categoryName : response.categoryName,
@@ -57,7 +56,6 @@ class EditCategory extends Component {
                 categoryName: this.state.categoryName
             })
                 .then((response) => {
-                    console.log(response.data);
                     this.setState({
                         shouldRedirectCategories: true,
                     });

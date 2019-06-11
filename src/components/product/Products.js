@@ -21,7 +21,6 @@ class Products extends Component {
         const promise = await axios.get('/products');
         const response = promise.data;
         this.setState({products: response});
-        console.log(response);
         const categoriesPromise = await axios.get('/categories');
         const categoriesResponse = categoriesPromise.data;
         this.setState({
@@ -31,7 +30,6 @@ class Products extends Component {
 
     setCategory(category) {
         this.setState({displayCategoryID: category.categoryID});
-        console.log('set category to ', category);
     }
 
     render() {

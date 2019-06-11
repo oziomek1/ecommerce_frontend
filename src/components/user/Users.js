@@ -38,7 +38,6 @@ class Users extends Component {
             const responseUsers = promiseUsers.data[0];
 
             this.setState({users: responseUsers});
-            console.log(response, responseUsers, response.loginInfo.providerKey);
         } else {
             this.setState({shouldRedirectSignIn: true});
         }

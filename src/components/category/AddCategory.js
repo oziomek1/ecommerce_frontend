@@ -28,7 +28,6 @@ class AddCategory extends Component {
                 categoryName: this.state.categoryName
             })
                 .then((response) => {
-                    console.log(response.data);
                     this.setState({
                         shouldRedirectCategories: true,
                     });

@@ -46,7 +46,6 @@ class EditProduct extends Component {
             },
         );
         const response = promise.data[0];
-        console.log("category response", response);
         this.setState({
             productID: response.productID,
             productName: response.productName,
@@ -88,7 +87,6 @@ class EditProduct extends Component {
 
     handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        console.log(this.state);
         if (this.state.productName !== '' && this.state.categoryID !== '') {
             await axios.put('/products/edit/' + this.state.productID, {
                 productName: this.state.productName,
@@ -99,7 +97,6 @@ class EditProduct extends Component {
                 productPriceGross: this.state.productPriceGross
             })
                 .then((response) => {
-                    console.log(response.data);
                     this.setState({
                         shouldRedirectProducts: true,
                     });

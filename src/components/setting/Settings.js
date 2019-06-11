@@ -41,7 +41,6 @@ class Settings extends Component {
                     admin: response,
                     users: responseUsers,
                 });
-                console.log(response, responseUsers, response.loginInfo.providerKey);
             } else {
                 this.setState({shouldRedirectSignIn: true});
             }
